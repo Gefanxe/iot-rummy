@@ -1,0 +1,21 @@
+{
+  "name": "iot-rummy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "delay": "^5.0.0",
+    "easytimer.js": "^4.5.4",
+    "eventemitter3": "^5.0.0",
+    "prompts": "^2.4.2",
+    "webduino-blockly": "github:Gefanxe/webduino-blockly",
+    "webduino-js": "github:Gefanxe/webduino-js"
+  }
+}
