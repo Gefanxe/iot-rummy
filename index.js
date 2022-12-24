@@ -43,11 +43,11 @@ async function setBoard(smart) {
 
   smart.photocell.on(function(val){
     const v = (Math.round((((val - (0)) * (1/((1)-(0)))) * ((100)-(0)) + (0))*100))/100;
-    console.log('val:',v);
+    // console.log('val:',v);
 
-    if (v > 15) smart.rgbled.setColor(0, 0, 0);
-    if (v > 10 && v < 15) smart.rgbled.setColor(0, 255, 0);
-    if (v < 10) {
+    if (v > 40) smart.rgbled.setColor(0, 0, 0);
+    if (v > 20 && v < 40) smart.rgbled.setColor(0, 255, 0);
+    if (v < 20) {
       smart.rgbled.setColor(255, 0, 0);
       runCD();
     }
