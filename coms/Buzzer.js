@@ -6,12 +6,13 @@ export class Buzzer {
   /**
    * 
    * @param {import('../type/MyIots').Smart} smart 
+   * @param {number} pin 
    */
-  constructor(smart) {
+  constructor(smart, pin) {
     const self = this;
 
     self.smart = smart;
-    self.buzzer = getBuzzer(smart.board, 5);
+    self.buzzer = getBuzzer(smart.board, pin);
   }
 
   beep() {

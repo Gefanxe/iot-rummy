@@ -1,28 +1,23 @@
-// import prompts from 'prompts';
-// import { startPrompt } from './funcs/tools.js';
 import "webduino-js";
 import "webduino-blockly";
-import { Buzzer, createBoard, Tm1637 } from './coms/index.js';
-import delay from "delay";
-
-const nowPlayers = [];
-
-let gameStatus = 0; // 0 = wait for player, 1 = start game, 2 = end of game
-
+import { Buzzer, createBoard, Matrix } from './coms/index.js';
+import _ from 'lodash';
 
 const myIots = [
   {
-    deviceId: '10VvDYmd',
+    deviceId: '10Q4P5nQ',
     board: null,
+    rgbled: null,
     buzzer: null,
-    tm1637: null,
-    ultrasonic: null
+    matrix: null,
+    photocell: null
   }
 ];
 
-for (let i = 0; i < myIots.length; i++) {
-  createBoard(myIots[i], setBoard);
-}
+// for (let i = 0; i < myIots.length; i++) {
+//   createBoard(myIots[i], setBoard);
+// }
+createBoard(myIots[0], setBoard);
 
 /**
  * @param {import('./type/MyIots').Smart} smart
@@ -33,16 +28,29 @@ async function setBoard(smart) {
 
   // 初始各項功能
 
-  smart.buzzer = new Buzzer(smart);
-  smart.tm1637 = new Tm1637(smart);
-  smart.ultrasonic = getUltrasonic(smart.board, 16, 14);
-  while (!false) {
-    await delay(500);
-    await smart.ultrasonic.ping();
-    if (smart.ultrasonic.distance < 40) {
-      smart.buzzer.di();
-      smart.tm1637.stopCountDown();
-      smart.tm1637.startCountDown();
+  smart.rgbled = getRGBLedCathode(smart.board, 15, 12, 13);
+
+  smart.buzzer = new Buzzer(smart, 13);
+  smart.matrix = new Matrix(smart, 16, 14, 5);
+
+  smart.photocell = getPhotocell(smart.board, 0);
+
+  const runCD = _.debounce(function() {
+    smart.buzzer.di();
+    smart.matrix.stopCountDown();
+    smart.matrix.startCountDown();
+  }, 500);
+
+  smart.photocell.on(function(val){
+    const v = (Math.round((((val - (0)) * (1/((1)-(0)))) * ((100)-(0)) + (0))*100))/100;
+    console.log('val:',v);
+
+    if (v > 15) smart.rgbled.setColor(0, 0, 0);
+    if (v > 10 && v < 15) smart.rgbled.setColor(0, 255, 0);
+    if (v < 10) {
+      smart.rgbled.setColor(255, 0, 0);
+      runCD();
     }
-  }
+  });
+
 }

@@ -14,6 +14,7 @@
     "delay": "^5.0.0",
     "easytimer.js": "^4.5.4",
     "eventemitter3": "^5.0.0",
+    "lodash": "^4.17.21",
     "prompts": "^2.4.2",
     "webduino-blockly": "github:Gefanxe/webduino-blockly",
     "webduino-js": "github:Gefanxe/webduino-js"

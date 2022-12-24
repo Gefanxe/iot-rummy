@@ -1,11 +1,16 @@
 import { Timer } from 'easytimer.js';
-import { Tm1637 } from '../coms';
+import { Tm1637, Matrix } from '../coms';
 
 declare global {
   function getTM1637(board: object, clk: number, dio: number): void;
   function getBuzzer(board: object, pin: number): void;
   function getButton(board: object, pin: number): void;
   function getRGBLedCathode(board: object, red: number, green: number, blue: number): void;
+  function getRGBLed(board: object, red: number, green: number, blue: number): void;
+  function getMax7219(board: object, din: number, cs: number, clk: number): void;
+  function getUltrasonic(board: object, trig: number, echo: number): void;
+  function getPhotocell(board: object, pin: number): void;
+  function max7219_number(showNumber: number): void;
 }
 
 interface RGBLed {
@@ -31,6 +36,7 @@ export interface Smart {
   buzzerPin: number,
   tm1637: Tm1637,
   tm1637Pin: number[],
+  matrix: Matrix,
   btn1: Button,
   btn1Pin: number,
   btn2: Button,
